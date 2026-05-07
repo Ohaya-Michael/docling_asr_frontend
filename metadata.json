@@ -1,0 +1,12 @@
+{
+  "name": "Precision Transcribe",
+  "description": "High-performance transcription dashboard for ASR, OCR, and API pipeline management.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "Audio Processing",
+    "Real-time Transcription",
+    "OCR Management"
+  ]
+}

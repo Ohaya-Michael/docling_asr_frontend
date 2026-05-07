@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  /* Frosted Glass Theme Colors */
+  --color-background: #0f172a;
+  --color-on-background: #ffffff;
+  
+  --color-primary: #ffffff;
+  --color-on-primary: #0f172a;
+  --color-primary-container: rgba(255, 255, 255, 0.15);
+  --color-on-primary-container: #ffffff;
+  
+  --color-secondary: #a78bfa;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: rgba(167, 139, 250, 0.2);
+  --color-on-secondary-container: #ffffff;
+  --color-secondary-fixed: rgba(167, 139, 250, 0.15);
+  --color-secondary-fixed-dim: rgba(167, 139, 250, 0.1);
+  
+  --color-tertiary: #4edea3;
+  --color-on-tertiary: #0f172a;
+  --color-tertiary-fixed-dim: rgba(78, 222, 163, 0.2);
+
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-on-surface: #ffffff;
+  --color-surface-variant: rgba(255, 255, 255, 0.03);
+  --color-on-surface-variant: rgba(255, 255, 255, 0.6);
+  --color-surface-bright: rgba(255, 255, 255, 0.08);
+  --color-surface-container-lowest: rgba(255, 255, 255, 0.04);
+  --color-surface-container-low: rgba(255, 255, 255, 0.06);
+  --color-surface-container: rgba(255, 255, 255, 0.08);
+  --color-surface-container-high: rgba(255, 255, 255, 0.12);
+  --color-surface-container-highest: rgba(255, 255, 255, 0.15);
+  
+  --color-outline: rgba(255, 255, 255, 0.1);
+  --color-outline-variant: rgba(255, 255, 255, 0.05);
+
+  --color-on-secondary-fixed-variant: #a78bfa;
+
+  /* Fonts */
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-headline: "Manrope", sans-serif;
+  --font-mono: "Space Grotesk", monospace;
+  
+  /* Radius */
+  --radius-xl: 1.5rem;
+  --radius-lg: 1rem;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@300;600;700;800&family=Space+Grotesk:wght@400;700&display=swap');
+
+body {
+  @apply text-on-background antialiased font-sans min-h-screen relative;
+  background: radial-gradient(circle at 0% 0%, #312e81 0%, #1e1b4b 30%, #0f172a 100%);
+}
+
+.mesh-bg {
+  @apply fixed inset-0 z-[-1] opacity-40 pointer-events-none;
+  background: 
+    radial-gradient(circle at 80% 20%, #8b5cf6 0%, transparent 40%),
+    radial-gradient(circle at 20% 80%, #ec4899 0%, transparent 40%);
+}
+
+.glass {
+  @apply bg-surface backdrop-blur-[20px] border border-outline;
+}
+
+.glass-card {
+  @apply bg-surface-container backdrop-blur-[20px] border border-outline rounded-[24px];
+}
+
+@layer utilities {
+  .status-pulse {
+    animation: status-pulse-anim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes status-pulse-anim {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+.markdown-body h3 {
+  @apply font-headline text-lg font-semibold text-white mb-2;
+}
+
+.markdown-body p {
+  @apply font-sans text-base text-on-surface-variant leading-relaxed mb-4;
+}
+
+.markdown-body blockquote {
+  @apply my-6 bg-white/5 backdrop-blur-md p-4 border-l-4 border-secondary rounded-r-lg italic text-sm text-on-surface-variant;
+}
+
+.markdown-body ul {
+  @apply list-disc pl-6 space-y-2 font-sans text-base text-on-surface-variant mb-4;
+}
+
+.markdown-body strong {
+  @apply font-bold text-white;
+}
