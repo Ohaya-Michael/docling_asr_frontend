@@ -12,7 +12,7 @@ export const Pipelines: React.FC = () => {
       animate: true,
       pipelines: [
         { title: 'Whisper Model', subtitle: 'WHISPER_TURBO', icon: GitFork, color: 'bg-primary-fixed-dim', iconColor: 'text-primary' },
-        { title: 'Diarization', subtitle: 'Pyannote 3.1 Standard', icon: Users, color: 'bg-primary-fixed-dim', iconColor: 'text-primary' },
+        // { title: 'Diarization', subtitle: 'Pyannote 3.1 Standard', icon: Users, color: 'bg-primary-fixed-dim', iconColor: 'text-primary' },
       ]
     },
     {
