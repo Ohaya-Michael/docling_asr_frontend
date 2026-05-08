@@ -70,17 +70,12 @@ const handleTranscribe = async () => {
     const formData = new FormData();
     formData.append('file', selectedFile);
 
-    const { data } = await axios.post('http://localhost:8001/convert', formData, {
+    const { data } = await axios.post('https://docling-asr.onrender.com/convert', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
 
-
-    // console.log('API response:', data);
-    // console.log(`File "${selectedFile.name}" processed with ${fileInfo.label} pipeline.`);
-    // console.log(`${fileInfo.label} ${fileInfo.action} complete! You can view it in the Records page.`);
-
     setSelectedFile(null);
-    navigate('/records', { state: { result : data}});
+    navigate('/records')// state: { result : data}});
 
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;

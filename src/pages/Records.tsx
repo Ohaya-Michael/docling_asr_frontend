@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { CheckCircle2, Clock, Database, Copy, Download, Share2, Search, ArrowLeft, MoreHorizontal, Check } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { motion, AnimatePresence } from 'motion/react';
-//ort { useLocation } from 'react-router-dom';
 import { cn } from '@/src/lib/utils';
 import { TranscriptionRecord } from '@/src/types';
 import axios from 'axios';
@@ -57,8 +56,6 @@ User retention metrics show a direct correlation between transcription accuracy 
 ];
 
 export const Records: React.FC = () => {
-  // const location = useLocation();
-  // const result = location.state?.result;
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filter, setFilter] = useState<'all' | 'asr' | 'ocr' | 'pdf'>('all');
@@ -66,7 +63,7 @@ export const Records: React.FC = () => {
   const [apiResult, setApiResult] = useState<any>(null);
 
   const data =async() => {
-    const record = await axios.get('http://localhost:8001/converted-data');
+    const record = await axios.get('https://docling-asr.onrender.com/converted-data');
     setApiResult(record.data);
   }
 
@@ -75,7 +72,6 @@ export const Records: React.FC = () => {
   }, []);
 
   const selectedRecord = apiResult?.find((r: any) => r.id === selectedRecordId);
-
   const filteredRecords = apiResult?.filter((record: any) => {
     const matchesSearch = record.title.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filter === 'all' || record.pipeline.toLowerCase().includes(filter.toLowerCase());
