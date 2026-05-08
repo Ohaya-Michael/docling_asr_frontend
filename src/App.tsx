@@ -15,8 +15,8 @@ const getActivePage = (pathname: string): Page => {
       return 'capture';
     case '/records':
       return 'records';
-    case '/settings':
-      return 'settings';
+    // case '/settings':
+    //   return 'settings';
     default:
       return 'pipelines';
   }
@@ -37,7 +37,7 @@ function AppContent() {
             <Route path="/" element={<Pipelines />} />
             <Route path="/capture" element={<Capture />} />
             <Route path="/records" element={<Records />} />
-            <Route path="/settings" element={<Settings />} />
+            {/* <Route path="/settings" element={<Settings />} /> */}
           </Routes>
         </AnimatePresence>
       </main>

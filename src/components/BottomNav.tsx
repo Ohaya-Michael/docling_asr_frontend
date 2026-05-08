@@ -8,7 +8,7 @@ const items = [
   { id: 'pipelines', label: 'Pipelines', icon: GitFork, path: '/' },
   { id: 'capture', label: 'Capture', icon: Mic, path: '/capture' },
   { id: 'records', label: 'Records', icon: FileText, path: '/records' },
-  { id: 'settings', label: 'Settings', icon: Settings2, path: '/settings' },
+  // { id: 'settings', label: 'Settings', icon: Settings2, path: '/settings' },
 ] as const;
 
 interface BottomNavProps {
