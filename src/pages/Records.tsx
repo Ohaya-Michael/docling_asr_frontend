@@ -78,7 +78,7 @@ export const Records: React.FC = () => {
 
   const filteredRecords = apiResult?.filter((record: any) => {
     const matchesSearch = record.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesFilter = filter === 'all' || record.pipeline.toLowerCase().includes(filter.toUpperCase());
+    const matchesFilter = filter === 'all' || record.pipeline.toLowerCase().includes(filter.toLowerCase());
     return matchesSearch && matchesFilter;
   }) || [];
 
