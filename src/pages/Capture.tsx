@@ -48,7 +48,7 @@ export function Capture() {
     if (type === 'application/pdf' || name.endsWith('.pdf')) {
       return { icon: FileText, label: 'PDF Analysis', action: 'Analyze' };
     }
-    if (type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || name.endsWith('.docx')) {
+    if (type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || name.endsWith('.doc') || name.endsWith('.docx')) {
       return { icon: FileText, label: 'Document Analysis', action: 'Analyze' };
     }
     if (type.includes('image') || name.match(/\.(jpg|jpeg|png|webp)$/)) {
@@ -105,7 +105,7 @@ const handleTranscribe = async () => {
         ref={fileInputRef} 
         onChange={handleFileChange} 
         className="hidden" 
-        accept=".wav,.mp3,.mp4,.pdf,.png,.jpg,.jpeg,.webp"
+        accept=".wav,.mp3,.mp4,.pdf,.png,.jpg,.jpeg,.webp,.doc,.docx,audio/*,video/*"
       />
       {/* Hero Visual */}
       <div className="w-full mb-12 overflow-hidden glass-card shadow-lg">
@@ -180,7 +180,7 @@ const handleTranscribe = async () => {
                 <p className="font-headline text-xs font-bold text-white mb-1 uppercase tracking-widest">Select File</p>
                 <p className="font-sans text-xs text-white/40 font-medium">Drag & Drop media content</p>
                 <div className="mt-6 px-3 py-1 bg-white/5 rounded-lg text-[9px] font-bold font-mono text-white/40 tracking-widest uppercase border border-white/5">
-                  Accepted: AUDIO, VIDEO, PDF, IMAGE
+                  Accepted: AUDIO, VIDEO, PDF, IMAGE, DOCX
                 </div>
               </div>
             </div>
