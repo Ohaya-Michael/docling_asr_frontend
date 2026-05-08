@@ -1,21 +1,23 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Settings2, Bell, Search, MoreVertical, ArrowLeft } from 'lucide-react';
-import { cn } from '@/src/lib/utils';
 import { Page } from '@/src/types';
 
 interface HeaderProps {
   activePage: Page;
-  onBack?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activePage, onBack }) => {
+export const Header: React.FC<HeaderProps> = ({ activePage }) => {
+  const navigate = useNavigate();
+
   const getTitle = () => {
     switch (activePage) {
-      case 'pipelines': return 'Precision Transcribe';
-      case 'capture': return 'Precision Transcribe';
-      case 'records': return 'Precision Transcribe';
-      case 'settings': return 'Precision Transcribe';
-      default: return 'Precision Transcribe';
+      case 'pipelines':
+      case 'capture':
+      case 'records':
+      case 'settings':
+      default:
+        return 'Precision Transcribe';
     }
   };
 
@@ -24,8 +26,8 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onBack }) => {
       <div className="flex justify-between items-center px-6 h-full w-full max-w-7xl mx-auto">
         <div className="flex items-center gap-2">
           {activePage === 'settings' && (
-            <button 
-              onClick={onBack}
+            <button
+              onClick={() => navigate('/')}
               className="p-2 -ml-2 rounded-full hover:bg-white/10 transition-colors active:scale-95 text-white"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -34,10 +36,10 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onBack }) => {
           <Settings2 className="w-6 h-6 text-secondary" />
           <h1 className="font-headline text-lg font-bold text-white tracking-tight">{getTitle()}</h1>
         </div>
-        
+
         <div className="flex items-center gap-1">
           {activePage === 'records' && (
-             <button className="p-2 rounded-full hover:bg-white/10 transition-colors active:scale-95">
+            <button className="p-2 rounded-full hover:bg-white/10 transition-colors active:scale-95">
               <Search className="w-5 h-5 text-white/60" />
             </button>
           )}

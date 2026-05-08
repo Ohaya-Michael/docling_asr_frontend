@@ -2,12 +2,19 @@ import React, { useState, useRef } from 'react';
 import { Mic, Upload, Lock, FileAudio, Play, X, Loader2, Wand2, FileText, Image as ImageIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/src/lib/utils';
+import axios, { AxiosError } from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export const Capture: React.FC = () => {
+
+
+export function Capture() {
+  const navigate = useNavigate();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -41,23 +48,50 @@ export const Capture: React.FC = () => {
     if (type === 'application/pdf' || name.endsWith('.pdf')) {
       return { icon: FileText, label: 'PDF Analysis', action: 'Analyze' };
     }
+    if (type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || name.endsWith('.docx')) {
+      return { icon: FileText, label: 'Document Analysis', action: 'Analyze' };
+    }
     if (type.includes('image') || name.match(/\.(jpg|jpeg|png|webp)$/)) {
       return { icon: ImageIcon, label: 'OCR Pipeline', action: 'Extract' };
     }
     return { icon: FileAudio, label: 'Processing', action: 'Process' };
   };
 
-  const fileInfo = getFileTypeInfo(selectedFile);
+// Determine file type info for UI display and API handling
+const fileInfo = getFileTypeInfo(selectedFile);
 
-  const handleTranscribe = () => {
-    setIsProcessing(true);
-    // Simulate pipeline processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      alert(`${fileInfo.label} complete! You can view it in the Records page.`);
-      setSelectedFile(null);
-    }, 3000);
-  };
+const handleTranscribe = async () => {
+  if (!selectedFile) return;
+
+  setIsProcessing(true);
+  setError(null);
+
+  try {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+
+    const { data } = await axios.post('http://localhost:8001/convert', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+
+
+    // console.log('API response:', data);
+    // console.log(`File "${selectedFile.name}" processed with ${fileInfo.label} pipeline.`);
+    // console.log(`${fileInfo.label} ${fileInfo.action} complete! You can view it in the Records page.`);
+
+    setSelectedFile(null);
+    navigate('/records', { state: { result : data}});
+
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    const message = error.response?.data?.message ?? error.message ?? 'Something went wrong';
+    console.error('Processing failed:', message);
+    setError(message);
+  } finally {
+    setIsProcessing(false);
+    setUploadProgress(0);
+  }
+};
 
   return (
     <motion.div 
