@@ -1,10 +1,6 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React, { useState } from 'react';
+import React from 'react';
 import { AnimatePresence } from 'motion/react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { BottomNav } from './components/BottomNav';
 import { Pipelines } from './pages/Pipelines';
@@ -13,42 +9,48 @@ import { Records } from './pages/Records';
 import { Settings } from './pages/Settings';
 import { Page } from './types';
 
-export default function App() {
-  const [activePage, setActivePage] = useState<Page>('pipelines');
+const getActivePage = (pathname: string): Page => {
+  switch (pathname) {
+    case '/capture':
+      return 'capture';
+    case '/records':
+      return 'records';
+    case '/settings':
+      return 'settings';
+    default:
+      return 'pipelines';
+  }
+};
 
-  const renderPage = () => {
-    switch (activePage) {
-      case 'pipelines':
-        return <Pipelines key="pipelines" />;
-      case 'capture':
-        return <Capture key="capture" />;
-      case 'records':
-        return <Records key="records" />;
-      case 'settings':
-        return <Settings key="settings" />;
-      default:
-        return <Pipelines key="pipelines" />;
-    }
-  };
+function AppContent() {
+  const location = useLocation();
+  const activePage = getActivePage(location.pathname);
 
   return (
     <div className="min-h-screen text-white font-sans selection:bg-secondary/30">
       <div className="mesh-bg" />
-      <Header 
-        activePage={activePage} 
-        onBack={() => setActivePage('pipelines')} 
-      />
-      
+      <Header activePage={activePage} />
+
       <main className="pt-20 px-6 max-w-2xl mx-auto w-full">
         <AnimatePresence mode="wait">
-          {renderPage()}
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<Pipelines />} />
+            <Route path="/capture" element={<Capture />} />
+            <Route path="/records" element={<Records />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
         </AnimatePresence>
       </main>
 
-      <BottomNav 
-        activePage={activePage} 
-        onPageChange={setActivePage} 
-      />
+      <BottomNav activePage={activePage} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
