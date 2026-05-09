@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/src/lib/utils';
 import axios, { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import logo from '../assets/capture_hero.png';
 
 
 export function Capture() {
@@ -108,7 +108,7 @@ const handleTranscribe = async () => {
         <img 
           className="w-full h-auto object-cover aspect-[21/9] opacity-40 brightness-110" 
           alt="Audio wave visualization"
-          src={'src/assets/capture_hero.png'}
+          src={logo}
         />
       </div>
 
