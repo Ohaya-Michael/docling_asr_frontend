@@ -139,7 +139,7 @@ export const Records: React.FC = () => {
                   {selectedRecord.pipeline}
                 </span>
                 <h2 className="font-headline text-2xl font-light text-white tracking-wide leading-tight">
-                  {selectedRecord.title}
+                  {selectedRecord.title.length > 15 ? `${selectedRecord.title.substring(0, 15)}...` : selectedRecord.title}
                 </h2>
               </div>
               <CheckCircle2 className="w-6 h-6 text-tertiary shadow-[0_0_10px_rgba(78,222,163,0.3)]" />
